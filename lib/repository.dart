@@ -20,4 +20,8 @@ class AnimeRepository {
   Future<List<AnimePlayItem>> fetchPlayList({@required int id}) async {
     return _apiAnimevost.playList(id);
   }
+
+  Future<Anime> fetchinfo({@required int id}) async {
+    return _apiAnimevost.info(id);
+  }
 }

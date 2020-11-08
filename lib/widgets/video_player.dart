@@ -167,12 +167,42 @@ class _ControlsOverlay extends StatelessWidget {
                               padding: EdgeInsets.all(10),
                               allowScrubbing: true),
                         ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text(
+                              controller.value.duration == null
+                                  ? ""
+                                  : (controller.value.duration.inHours > 0
+                                      ? "${(controller.value.duration.inHours).toString().padLeft(2, '0')}:${(controller.value.duration.inMinutes % 60).toString().padLeft(2, '0')}:${(controller.value.duration.inSeconds % 60).toString().padLeft(2, '0')}"
+                                      : "${(controller.value.duration.inSeconds ~/ 60).toString().padLeft(2, '0')}:${(controller.value.duration.inSeconds % 60).toString().padLeft(2, '0')}"),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text(
+                              controller.value.duration == null
+                                  ? ""
+                                  : (controller.value.duration.inHours > 0
+                                      ? "${(controller.value.position.inHours).toString().padLeft(2, '0')}:${(controller.value.position.inMinutes % 60).toString().padLeft(2, '0')}:${(controller.value.position.inSeconds % 60).toString().padLeft(2, '0')}"
+                                      : "${(controller.value.position.inSeconds ~/ 60).toString().padLeft(2, '0')}:${(controller.value.position.inSeconds % 60).toString().padLeft(2, '0')}"),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   )
                 : Container(color: Colors.transparent),
             onTap: () {
-              context.bloc<VideoPlayerBloc>().add(ToggleOverlayEvent());
+              context.read<VideoPlayerBloc>().add(ToggleOverlayEvent());
             },
           ),
         );

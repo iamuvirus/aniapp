@@ -28,8 +28,21 @@ class ApiAnimevost {
     return playList;
   }
 
+  Future<Anime> info(int id) async {
+    String url = '$baseUrl/info';
+    Map<String, int> body = {'id': id};
+    String encodedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
+
+    http.Response response = await http.post(url,
+        body: encodedBody,
+        headers: {"Content-Type": "application/x-www-form-urlencoded"});
+
+    Anime anime = ResponseLast.fromJson(responseHandling(response)).data[0];
+    return anime;
+  }
+
   ///Попытка универсального обработчика ответа
-  ///TODO разобраться что должно возвращаться
+  ///TODO: разобраться что должно возвращаться
   dynamic responseHandling(http.Response response) {
     if (response.statusCode == 200) {
       Uint8List bytes = response.bodyBytes;
@@ -37,7 +50,7 @@ class ApiAnimevost {
       dynamic jsonResponse = jsonDecode(responseString);
       return jsonResponse;
     } else {
-      ///TODO Надо что-то тут делать
+      ///TODO: Надо что-то тут делать
       throw Exception('Error http api');
     }
   }

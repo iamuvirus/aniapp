@@ -16,7 +16,7 @@ class PlaylistBloc extends Bloc<AnimePlayListEvent, AnimePlayListState> {
       : super(AnimePlayListInitialState());
 
   List<AnimePlayItem> playList = [];
-
+  Anime anime = Anime();
   bool sortAsc = true;
 
   @override
@@ -24,6 +24,7 @@ class PlaylistBloc extends Bloc<AnimePlayListEvent, AnimePlayListState> {
     if (event is AnimePlayListLoadEvent) {
       yield AnimePlayListLoadingState();
       try {
+        anime = await animeRepository.fetchinfo(id: event.id);
         playList.clear();
         playList.addAll(await animeRepository.fetchPlayList(id: event.id)
           ..sort((a, b) {
