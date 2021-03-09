@@ -18,7 +18,7 @@ class AnimeItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           context
-              .bloc<PlaylistBloc>()
+              .read<PlaylistBloc>()
               .add(AnimePlayListLoadEvent(id: anime.id));
           Navigator.push(
             context,

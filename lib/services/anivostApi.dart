@@ -4,10 +4,11 @@ import 'package:aniapp/models/animeModel.dart';
 import 'package:http/http.dart' as http;
 
 class ApiAnimevost {
-  String baseUrl = 'https://api.animevost.org/v1';
+  String baseUrl = 'api.animevost.org';
 
   Future<List<Anime>> getLast(int page, int perPage) async {
-    String url = '$baseUrl/last?page=$page&quantity=$perPage';
+    Uri url = Uri.https(
+        baseUrl, '/v1/last', {"page": '$page', "quantity": '$perPage'});
 
     final http.Response response = await http.get(url);
     var obj = ResponseLast.fromJson(responseHandling(response));
@@ -15,7 +16,7 @@ class ApiAnimevost {
   }
 
   Future<List<AnimePlayItem>> playList(int id) async {
-    String url = '$baseUrl/playlist';
+    Uri url = Uri.https(baseUrl, "/v1/playlist");
     Map<String, int> body = {'id': id};
     String encodedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
 
@@ -29,7 +30,7 @@ class ApiAnimevost {
   }
 
   Future<Anime> info(int id) async {
-    String url = '$baseUrl/info';
+    Uri url = Uri.https(baseUrl, "/v1/info");
     Map<String, int> body = {'id': id};
     String encodedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
 

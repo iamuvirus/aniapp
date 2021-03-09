@@ -6,5 +6,3 @@ class AnimePlayListLoadEvent extends AnimePlayListEvent {
   final int id;
   AnimePlayListLoadEvent({@required this.id});
 }
-
-class AnimePlayListSortEvent extends AnimePlayListEvent {}

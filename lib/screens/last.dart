@@ -21,22 +21,22 @@ class AnimeList extends StatelessWidget {
             );
           } else if (state is AnimeLoadedState) {
             _animeList.addAll(state.animeList);
-            context.bloc<AnimeBloc>().isFetching = false;
+            context.read<AnimeBloc>().isFetching = false;
           } else if (state is AnimeErrorState) {
             return Center(child: Text('Error'));
           }
           return RefreshIndicator(
               onRefresh: () async {
                 _animeList.clear();
-                context.bloc<AnimeBloc>().add(AnimeRefreshEvent());
+                context.read<AnimeBloc>().add(AnimeRefreshEvent());
               },
               child: CustomScrollView(
                 controller: _scrollController
                   ..addListener(() {
                     if (_scrollController.offset >=
                             _scrollController.position.maxScrollExtent - 300 &&
-                        !context.bloc<AnimeBloc>().isFetching) {
-                      context.bloc<AnimeBloc>()
+                        !context.read<AnimeBloc>().isFetching) {
+                      context.read<AnimeBloc>()
                         ..isFetching = true
                         ..add(AnimeLoadEvent());
                     }
@@ -49,7 +49,7 @@ class AnimeList extends StatelessWidget {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: context.bloc<AnimeBloc>().isFetching == true
+                    child: context.read<AnimeBloc>().isFetching == true
                         ? Center(
                             child: Padding(
                               padding: EdgeInsets.all(5),

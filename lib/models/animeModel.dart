@@ -9,7 +9,7 @@ class ResponseLast {
         ? new StateResponse.fromJson(json['state'])
         : null;
     if (json['data'] != null) {
-      data = new List<Anime>();
+      data = new List<Anime>.empty(growable: true);
       json['data'].forEach((v) {
         data.add(new Anime.fromJson(v));
       });
